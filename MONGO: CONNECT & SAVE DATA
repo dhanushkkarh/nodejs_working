@@ -1,0 +1,49 @@
+/// THS CODE CREATED A DB 'DRONES' IN THE DATABASE SPECIFIED AND INSERTED THE GIVEN DATA. THE DB 'DRONES' WASN'T CREATED BEFORE THIS.
+
+const mongoose = require('mongoose')
+const url = 'mongodb+srv://dhanushkkar:dhanush313@cluster0.hmcir4d.mongodb.net/?retryWrites=true&w=majority'
+const schema = mongoose.schema;
+mongoose.set('strictQuery', false);
+
+mongoose.connect('mongodb://127.0.0.1:27017/user', {useNewUrlParser:true});
+mongoose.connection
+    .once('open',()=> console.log('connected!!'));
+
+ 
+    
+    
+    const productSchema = new mongoose.Schema({
+        name: {
+            type: String,
+            required: true
+        },
+        price: {
+            type: Number,
+            required: true,
+            min: 0
+        },
+        utility: {
+            type: [String],
+            enum: ['Monitoring or Inspection', 'Security', 'Delivery', 'Photography', 'Recreation']
+        },
+        weight: {
+            type: String,
+            lowercase: true
+        },
+        onSale: {
+            type: Boolean,
+            default: false
+        }
+    })
+    const Drone = mongoose.model('Drone', productSchema);
+    const drone = new Drone({
+        name: "SV - Aira 157B",
+        price: 2455,
+        utility: ["Photography"],
+        weight: "467 grams",
+        onSale: false
+    })
+    drone.save(function (err, doc) {
+        console.log(doc._id);
+    });
+        
